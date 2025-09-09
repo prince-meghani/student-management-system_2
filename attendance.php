@@ -1,10 +1,143 @@
-<?php require __DIR__.'/inc/auth.php'; require __DIR__.'/inc/db.php'; ?>
+<?php 
+
+include __DIR__ . "/inc/auth.php";
+include __DIR__ . "/inc/db.php";
+
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Attendance</title>
-  <link rel="stylesheet" href="public/styles.css">
+  <style>
+  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .col {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .card {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn-primary {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+
+    .flash {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .flash.ok {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .flash.bad {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f1f1;
+    }
+
+    .btn-link {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -44,6 +177,7 @@
     ?>
 
     <div class="row">
+      <!-- Left Column -->
       <div class="col">
         <div class="card">
           <form method="post">
@@ -69,6 +203,7 @@
         </div>
       </div>
 
+      <!-- Right Column -->
       <div class="col">
         <div class="card">
           <strong>All Sessions</strong>
@@ -80,7 +215,7 @@
                 <th>Class</th>
                 <th>Date</th>
                 <th>Start</th>
-                <th></th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
