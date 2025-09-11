@@ -9,7 +9,6 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'Parent') {
 
 $parentEmail = $_SESSION['user'];
 
-// Find parent's PID
 $stmt = $conn->prepare("SELECT pid, fname, lname FROM parent WHERE email=? LIMIT 1");
 $stmt->bind_param("s", $parentEmail);
 $stmt->execute();
@@ -22,15 +21,15 @@ if (!$parent) {
 
 $pid = $parent['pid'];
 
-// Fetch attendance for all children
+
 $query = "
-SELECT st.fname AS student_fname, st.lname AS student_lname, a.date, s.subject, s.class, ar.status
-FROM student st
-JOIN attendancereport ar ON st.sid = ar.sid
-JOIN attendance a ON ar.aid = a.aid
-JOIN schedule s ON a.sid = s.id
-WHERE st.parent = ?
-ORDER BY a.date DESC
+            SELECT st.fname AS student_fname, st.lname AS student_lname, a.date, s.subject, s.class, ar.status
+            FROM student st
+            JOIN attendancereport ar ON st.sid = ar.sid
+            JOIN attendance a ON ar.aid = a.aid
+            JOIN schedule s ON a.sid = s.id
+            WHERE st.parent = ?
+            ORDER BY a.date DESC
 ";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $pid);

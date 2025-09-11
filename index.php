@@ -16,7 +16,6 @@ $email = $_SESSION['email'];
 <head>
     <title>Dashboard - SMS</title>
     <style>
-        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
@@ -24,20 +23,34 @@ $email = $_SESSION['email'];
             padding: 0;
         }
 
-        
-        header {
+        header.header-content {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
             background-color: #007bff;
             color: white;
             padding: 15px 20px;
-            text-align: center;
         }
 
-        header h1 {
+        header.header-content h1 {
             margin: 0;
             font-size: 24px;
         }
 
-        
+        .logout-btn {
+            padding: 10px 15px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #a71d2a;
+        }
+
+      
         .container {
             max-width: 900px;
             margin: 30px auto;
@@ -47,13 +60,11 @@ $email = $_SESSION['email'];
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        
         h2 {
             color: #333;
             margin-top: 20px;
         }
 
-       
         ul {
             list-style-type: none;
             padding: 0;
@@ -74,7 +85,6 @@ $email = $_SESSION['email'];
             color: #0056b3;
         }
 
-     
         .notice {
             border: 1px solid #ccc;
             padding: 15px;
@@ -95,35 +105,18 @@ $email = $_SESSION['email'];
             margin-bottom: 8px;
         }
 
-        
-        .logout-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #dc3545;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background-color: #a71d2a;
-        }
-
-        
         hr {
             margin: 30px 0;
             border: none;
             border-top: 1px solid #ddd;
         }
-
-      
     </style>
 </head>
 <body>
-    <header>
+    
+    <header class="header-content">
         <h1>Welcome, <?php echo htmlspecialchars($role); ?></h1>
+        <a href="logout.php" class="logout-btn">Logout</a>
     </header>
 
     <div class="container">
@@ -137,6 +130,7 @@ $email = $_SESSION['email'];
                     <li><a href='add_notice.php'>Post Notice</a></li>
                     <li><a href='add_student.php'>Add Students</a></li>
                     <li><a href='manage_students.php'>Manage Students</a></li>
+                    <li><a href='add_parent.php'>Add Parent</a></li>
                   </ul>";
         }
 
@@ -165,8 +159,6 @@ $email = $_SESSION['email'];
                   </div>";
         }
         ?>
-
-        <a href="logout.php" class="logout-btn">Logout</a>
     </div>
 </body>
 </html>

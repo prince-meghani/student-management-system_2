@@ -2,7 +2,6 @@
 session_start();
 include("inc/db.php");
 
-// Check if the user is logged in and is a Student
 if (!isset($_SESSION['email']) || $_SESSION['role'] != 'Student') {
     header("Location: login.php");
     exit;
@@ -10,7 +9,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 'Student') {
 
 $email = $_SESSION['email'];
 
-// Fetch student SID from the correct table
 $studentQuery = mysqli_query($conn, "SELECT sid FROM student WHERE email = '$email' LIMIT 1");
 $studentData = mysqli_fetch_assoc($studentQuery);
 
@@ -20,7 +18,6 @@ if (!$studentData) {
 
 $student_id = $studentData['sid'];
 
-// Fetch exam results for this specific student
 $sql = "SELECT e.subject, e.exam_date, r.marks, r.grade
         FROM exam e
         JOIN examresult r ON e.exam_id = r.exam_id

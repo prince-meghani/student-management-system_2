@@ -2,7 +2,7 @@
 include("inc/db.php");
 session_start();
 
-// Ensure parent is logged in
+
 if (!isset($_SESSION['email']) || $_SESSION['role'] != 'Parent') {
     header("Location: login.php");
     exit;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 'Parent') {
 
 $parent_email = $_SESSION['email'];
 
-// Fetch parent ID
+
 $parent_query = mysqli_query($conn, "SELECT pid FROM parent WHERE email='$parent_email' LIMIT 1");
 $parent = mysqli_fetch_assoc($parent_query);
 
@@ -20,7 +20,6 @@ if (!$parent) {
 
 $parent_id = $parent['pid'];
 
-// Fetch children for this parent
 $children = mysqli_query($conn, "SELECT * FROM student WHERE parent = $parent_id");
 ?>
 

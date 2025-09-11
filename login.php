@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <title>Login - SMS</title>
     <style>
-        /* General body styling */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
@@ -49,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 0;
         }
 
-        /* Card container */
         .login-container {
             background: #fff;
             padding: 30px;
@@ -64,14 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #333;
         }
 
-        /* Error message */
         .error {
             color: red;
             margin-bottom: 15px;
             font-size: 14px;
         }
 
-        /* Input fields */
         label {
             display: block;
             text-align: left;
@@ -90,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 14px;
         }
 
-        /* Submit button */
         button {
             width: 100%;
             padding: 10px;
@@ -107,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #0056b3;
         }
 
-        /* Forgot password link */
         a {
             text-decoration: none;
             font-size: 14px;

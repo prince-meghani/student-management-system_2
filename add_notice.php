@@ -2,7 +2,7 @@
 session_start();
 include("inc/db.php");
 
-// Restrict access to teachers
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] != "Teacher") {
     die("<div class='error-message'>Access denied. Only teachers can manage notices.</div>");
 }
@@ -10,15 +10,15 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Teacher") {
 $message = "";
 $messageClass = "";
 
-// Delete notice
+
 if (isset($_GET['delete'])) {
-    $id = (int)$_GET['delete'];
+    $id = (int) $_GET['delete'];
     mysqli_query($conn, "DELETE FROM notice WHERE id=$id");
     $message = "Notice deleted successfully!";
     $messageClass = "success";
 }
 
-// Add new notice
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $noticeMessage = mysqli_real_escape_string($conn, $_POST['message']);
@@ -37,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Manage Notices</title>
     <style>
-        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
@@ -54,10 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background: #fff;
             padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        h2, h3 {
+        h2,
+        h3 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
@@ -83,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border: 1px solid #f5c6cb;
         }
 
-       
+
         form {
             display: flex;
             flex-direction: column;
@@ -111,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         select:focus {
             border-color: #007bff;
             outline: none;
-            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
         }
 
         textarea {
@@ -119,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             resize: vertical;
         }
 
-        
+
         button {
             padding: 10px;
             background-color: #007bff;
@@ -141,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-top: 1px solid #ddd;
         }
 
-        
+
         .notice-card {
             border: 1px solid #ddd;
             padding: 15px;
@@ -167,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-top: 4px;
         }
 
-       
+
         .delete-link {
             color: #dc3545;
             font-size: 14px;
@@ -188,17 +189,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Manage Notices</h2>
-
+        <a class="btn-back" href="index.php">&larr; Back</a>
         <?php if (!empty($message)): ?>
             <div class="flash-message <?php echo $messageClass; ?>">
                 <?php echo htmlspecialchars($message); ?>
             </div>
         <?php endif; ?>
 
-        
+
         <form method="POST">
             <div>
                 <label>Title:</label>
@@ -230,15 +232,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $res = mysqli_query($conn, "SELECT * FROM notice ORDER BY created_at DESC");
         if (mysqli_num_rows($res) > 0):
             while ($row = mysqli_fetch_assoc($res)):
-        ?>
-            <div class="notice-card">
-                <strong><?php echo htmlspecialchars($row['title']); ?></strong>
-                (<?php echo htmlspecialchars($row['audience']); ?>)
-                <a class="delete-link" href="?delete=<?php echo (int)$row['id']; ?>">[Delete]</a>
-                <small><?php echo htmlspecialchars($row['created_at']); ?></small>
-                <p><?php echo nl2br(htmlspecialchars($row['message'])); ?></p>
-            </div>
-        <?php
+                ?>
+                <div class="notice-card">
+                    <strong><?php echo htmlspecialchars($row['title']); ?></strong>
+                    (<?php echo htmlspecialchars($row['audience']); ?>)
+                    <a class="delete-link" href="?delete=<?php echo (int) $row['id']; ?>">[Delete]</a>
+                    <small><?php echo htmlspecialchars($row['created_at']); ?></small>
+                    <p><?php echo nl2br(htmlspecialchars($row['message'])); ?></p>
+                </div>
+                <?php
             endwhile;
         else:
             echo "<p style='text-align:center; color:#777;'>No notices available.</p>";
@@ -246,4 +248,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
     </div>
 </body>
+
 </html>

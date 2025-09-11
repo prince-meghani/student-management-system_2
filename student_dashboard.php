@@ -9,7 +9,6 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'Student') {
 
 $email = $_SESSION['user'];
 
-// Find student's ID
 $stmt = $conn->prepare("SELECT sid, fname, lname, classroom FROM student WHERE email=? LIMIT 1");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -23,14 +22,13 @@ if (!$student) {
 $sid = $student['sid'];
 $classroom = $student['classroom'];
 
-// Fetch attendance for this student
 $query = "
-SELECT a.date, s.subject, s.class, s.stime, ar.status
-FROM attendancereport ar
-JOIN attendance a ON ar.aid = a.aid
-JOIN schedule s ON a.sid = s.id
-WHERE ar.sid = ?
-ORDER BY a.date DESC
+            SELECT a.date, s.subject, s.class, s.stime, ar.status
+            FROM attendancereport ar
+            JOIN attendance a ON ar.aid = a.aid
+            JOIN schedule s ON a.sid = s.id
+            WHERE ar.sid = ?
+            ORDER BY a.date DESC
 ";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $sid);

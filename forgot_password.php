@@ -1,18 +1,16 @@
 <?php
 include("inc/db.php");
 
-// Process form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-    // Check if email exists in database
     $result = mysqli_query($conn, "SELECT * FROM `user` WHERE email='$email' LIMIT 1");
     if (mysqli_num_rows($result) == 1) {
-        // Generate token and expiry
+        
         $token = bin2hex(random_bytes(16)); 
         $expiry = date("Y-m-d H:i:s", strtotime('+2 hours')); 
 
-        // Update token in database
+        
         $update = "UPDATE `user` 
                    SET reset_token='$token', reset_token_expiry='$expiry' 
                    WHERE email='$email'";
@@ -119,14 +117,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <h2>Forgot Password</h2>
 
-        <!-- Display success or error messages -->
+      
         <?php if (!empty($successMessage)): ?>
             <div class="message success"><?php echo $successMessage; ?></div>
         <?php elseif (!empty($errorMessage)): ?>
             <div class="message error"><?php echo $errorMessage; ?></div>
         <?php endif; ?>
 
-        <!-- Forgot password form -->
+       
         <form method="POST">
             <input type="email" name="email" placeholder="Enter your registered email" required>
             <br>

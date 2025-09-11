@@ -2,14 +2,12 @@
 session_start();
 include("inc/db.php");
 
-// Check if token is present in URL
 if (!isset($_GET['token']) || empty($_GET['token'])) {
     die("<p style='color:red; text-align:center;'>Invalid token provided in URL.</p>");
 }
 
 $token = mysqli_real_escape_string($conn, $_GET['token']);
 
-// Verify token and check expiry
 $sql = "SELECT * FROM `user` WHERE reset_token = '$token' AND reset_token_expiry > NOW()";
 $result = mysqli_query($conn, $sql);
 
@@ -26,13 +24,12 @@ $message = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $newPassword = $_POST['password'];
 
-    // Validate password length
     if (strlen($newPassword) < 4) {
         $message = "<div class='alert error'>Password must be at least 4 characters long.</div>";
     } else {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        // Update password and clear token
+        
         $update = "UPDATE `user` 
                    SET password='$hashedPassword', 
                        reset_token=NULL, 
@@ -151,10 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <h2>Reset Password</h2>
 
-        <!-- Display status messages -->
         <?php if (!empty($message)) echo $message; ?>
 
-        <!-- Reset Password Form -->
         <form method="POST">
             <label for="password">New Password</label>
             <input type="password" name="password" id="password" placeholder="Enter new password" required>

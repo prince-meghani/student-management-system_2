@@ -2,29 +2,26 @@
 session_start();
 include("inc/db.php");
 
-// Only allow teachers
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] != "Teacher") {
     die("Access denied. Only teachers can edit students.");
 }
 
-// Check if SID is provided
 if (!isset($_GET['sid']) || empty($_GET['sid'])) {
     die("No student ID provided.");
 }
 
 $sid = mysqli_real_escape_string($conn, $_GET['sid']);
 
-// Fetch student info
 $student_res = mysqli_query($conn, "SELECT * FROM student WHERE sid='$sid'");
 if (mysqli_num_rows($student_res) == 0) {
     die("Student not found.");
 }
 $student = mysqli_fetch_assoc($student_res);
 
-// Fetch parents for dropdown
 $parents = mysqli_query($conn, "SELECT pid, fname, lname, email FROM parent ORDER BY fname");
 
-// Handle form submission
+
 $flash = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fname = mysqli_real_escape_string($conn, $_POST['fname']);
@@ -43,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_query($conn, $sql)) {
         $flash = ['type' => 'ok', 'msg' => "Student $fname $lname updated successfully!"];
-        // Refresh student data
+        
         $student = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM student WHERE sid='$sid'"));
     } else {
         $flash = ['type' => 'bad', 'msg' => "Error: " . mysqli_error($conn)];
